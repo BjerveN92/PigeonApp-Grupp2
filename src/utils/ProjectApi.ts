@@ -39,4 +39,16 @@ export async function getFinishedProject() {
     }
 }
 
+// hämta projekt med id
+export async function getProjectById(projectId: string) {
+    try{
+        const respone = await axios.get(`${BASE_URL}/${projectId}`);
+        return respone.data;
+    }
+    catch (error){
+        console.error("Error creating project:", error);
+        throw error;
+    }
+}
+
 
