@@ -10,23 +10,39 @@ export function FormProject() {
   const [memberName, setMemberName] = useState<string[]>([]);
   const [currentMember, setCurrentMember] = useState("");
 
+  // funktion för att spara projekt
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // kollar om det finns medlemmar i labeln och om den finns så läggs den i listan när man spara
+    if (currentMember.trim()) {
+      setMemberName((prev) => [...prev, currentMember]);
+      setCurrentMember("");
+    }
+
+    // skapar en lista med medlemmar
+    const allMembers = currentMember.trim()
+      ? [...memberName, currentMember]
+      : memberName;
+
+    // Skapa ett nytt projekt
     const newProject: Project = {
       title,
       activeProject: true,
-      members: memberName.map((name) => ({
+      members: allMembers.map((name) => ({
         memberName: name,
       })),
       issues: [],
     };
+
+    // Skicka projektet till servern
     const result = await postProject(newProject);
     console.log("Projekt sparat:", result);
     setTitle("");
     setMemberName([]);
+    setCurrentMember("");
   };
-
+  // funktion för att lägga till medlemmar
   const handleMembers = () => {
     if (!currentMember.trim()) return;
     setMemberName((prev) => [...prev, currentMember]);
