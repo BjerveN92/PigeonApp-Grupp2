@@ -1,8 +1,13 @@
 import { Button } from "react-bootstrap";
 import { FormProject } from "./FormProject";
 import { GetProjects } from "./GetProjects";
+import { useNavigate } from "react-router-dom";
 
-function ProjectOverview({ onBack }: { onBack: () => void }) {
+function ProjectOverview() {
+  const navigate = useNavigate();
+  const backToHome = () => {
+    navigate("/");
+  };
   return (
     <>
       <header>
@@ -11,7 +16,7 @@ function ProjectOverview({ onBack }: { onBack: () => void }) {
       <FormProject />
 
       <GetProjects />
-      <Button variant="danger" onClick={onBack}>
+      <Button variant="danger" onClick={backToHome}>
         Tillbaka
       </Button>
     </>
