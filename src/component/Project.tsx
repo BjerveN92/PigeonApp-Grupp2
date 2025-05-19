@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import type { Project } from "../type/Interface";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getProjectById } from "../utils/ProjectApi";
+import { Button } from "react-bootstrap";
 
 export function Project() {
+  const navigate = useNavigate();
+  const backToProjects = () => {
+    navigate("/projectoverview");
+  };
   const { projectId } = useParams();
   const [project, setProject] = useState<Project | null>(null);
 
@@ -20,6 +25,10 @@ export function Project() {
   return (
     <header>
       <h1>{project.title}</h1>
+
+      <Button variant="danger" onClick={backToProjects}>
+        Tillbaka
+      </Button>
     </header>
   );
 }

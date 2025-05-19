@@ -1,19 +1,17 @@
-import { useState } from "react";
 import { Button } from "react-bootstrap";
-import ProjectOverview from "./ProjectOverview";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
-  const [showOverview, setShowOverview] = useState(false);
+  const navigate = useNavigate();
+
   return (
     <>
-      {!showOverview && (
-        <Button variant="outline-light" onClick={() => setShowOverview(true)}>
-          Projekt översikt
-        </Button>
-      )}
-      {showOverview && (
-        <ProjectOverview onBack={() => setShowOverview(false)} />
-      )}
+      <Button
+        variant="outline-light"
+        onClick={() => navigate("/projectoverview")}
+      >
+        Projekt översikt
+      </Button>
     </>
   );
 }
