@@ -11,7 +11,9 @@ function Home() {
           Projekt översikt
         </Button>
       )}
-      {showOverview && <ProjectOverview />}
+      {showOverview && (
+        <ProjectOverview onBack={() => setShowOverview(false)} />
+      )}
     </>
   );
 }
