@@ -4,8 +4,8 @@ export type IssueStatus = "ACTIVE" | "INACTIVE" | "FINISHED";
 
 // inteface för medlemmar
 export interface Member{
-    memberId: string;
-    projectId: string;
+    memberId?: string;
+    projectId?: string;
     memberName: string;
 }
 
@@ -34,7 +34,7 @@ export interface EstimatedTime{
 
 // inteface för projekt
 export interface Project{
-   projectId: string;
+   projectId?: string;
    title:string;
    activeProject: boolean;
    members:Member[];

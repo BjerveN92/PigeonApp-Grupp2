@@ -1,4 +1,5 @@
 import { Button } from "react-bootstrap";
+import { FormProject } from "./FormProject";
 
 function ProjectOverview({ onBack }: { onBack: () => void }) {
   return (
@@ -6,6 +7,7 @@ function ProjectOverview({ onBack }: { onBack: () => void }) {
       <header>
         <h1>Project översikt</h1>
       </header>
+      <FormProject />
       <Button variant="danger" onClick={onBack}>
         Tillbaka
       </Button>
