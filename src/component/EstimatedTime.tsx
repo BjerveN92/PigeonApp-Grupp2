@@ -38,14 +38,17 @@ export function EstimatedTime() {
       memberId: selectedMember,
       timeEstimate: Number(time),
       issueId: issueId,
+      
     };
-
+    console.log("newEstTime object:", newEstTime);
     try {
-      await patchEstimatedTime(newEstTime, issueId);
+      await patchEstimatedTime(newEstTime.timeEstimate, issueId);
 
       const updatedIssue = await getIssueById(issueId);
       setIssue(updatedIssue);
       setEstimatedTimes(updatedIssue.estimatedTimes);
+      console.log("Estimering sparad" + updatedIssue);
+
       setSelectedMember("");
       setTime("");
     } catch (error) {

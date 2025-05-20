@@ -78,9 +78,10 @@ export async function getIssueById(issueId: string) {
     }
 }
 //Funktion för att lägga time estimate till en issue
-export async function patchEstimatedTime(estTime: EstimatedTime, issueId: string) {
+export async function patchEstimatedTime(estTime: Number, issueId: string) {
   try{
     const res = await axios.patch(`${BASE_EST_URL}/updateEstTime/${issueId}`, estTime);
+    console.log("Time estimate uppdaterad:", res.data);
     return res.data;
   } 
   catch (error){
