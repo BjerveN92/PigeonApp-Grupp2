@@ -1,6 +1,8 @@
 
 import axios from "axios";
+import type { EstimatedTime } from "../type/Interface";
 const BASE_URL = 'http://localhost:8080/api/issues';
+const BASE_EST_URL = 'http://localhost:8080/api/estTime';
 
 export async function PostIssues() {
     try{
@@ -15,9 +17,10 @@ export async function PostIssues() {
 }
 
 
-export async function GetInactiveIssue() {
+export async function getInactiveIssues(projectId: string) {
     try{
-        const respone = await axios.get(`${BASE_URL}/inactiveIssues`);
+        const respone = await axios.get(`${BASE_URL}/inactiveIssues/${projectId}`);
+         console.log("API-response:", respone);
         return respone.data;
     }
     catch (error){
@@ -27,10 +30,10 @@ export async function GetInactiveIssue() {
 
 }
 
-export async function ActiveIssue() {
+export async function ActiveIssues(projectId: string) {
 
      try{
-        const respone = await axios.get(`${BASE_URL}/activeIssues`);
+        const respone = await axios.get(`${BASE_URL}/activeIssues/${projectId}`);
         return respone.data;
     }
     catch (error){
@@ -39,9 +42,9 @@ export async function ActiveIssue() {
     }
 }
 
-export async function FinishedIssues(){
+export async function FinishedIssues(projectId: string) {
      try{
-        const respone = await axios.get(`${BASE_URL}/finishedIssues`);
+        const respone = await axios.get(`${BASE_URL}/finishedIssues/${projectId}`);
         return respone.data;
     }
     catch (error){
@@ -49,7 +52,7 @@ export async function FinishedIssues(){
         throw error;
     }
 }
-
+//Skapar ett nytt issue kopplar till ett projekt
 export async function postIssueToProject(projectId:string, issueData: { issueTitle: string, issueDescription: string}) {
     try{
         const respone = await axios.post(`${BASE_URL}/newIssue/${projectId}`, issueData);
@@ -61,16 +64,29 @@ export async function postIssueToProject(projectId:string, issueData: { issueTit
     }
 }
 
-//Funktion för att visa alla issues i ett projekt
-//Backend: /api/issues/inactiveIssues/project/{projectId}
 
-export async function getIssuesByProjectId(projectId: string) {
+
+//Funktion för att hämata ett specifikt issue by id
+export async function getIssueById(issueId: string) {
     try{
-        const respone = await axios.get(`${BASE_URL}/inactiveIssues/project/${projectId}`);
-        return respone.data;
+        const response = await axios.get(`${BASE_URL}/${issueId}`);
+        return response.data;
     }
     catch (error){
-        console.error("Kunde inte hämta issues för projekt:", error);
+        console.error("Kunde inte hämta issue med id:", error);
         throw error;
     }
+}
+//Funktion för att lägga time estimate till en issue
+export async function patchEstimatedTime(estTime: EstimatedTime, issueId: string) {
+  try{
+    const res = await axios.patch(`${BASE_EST_URL}/updateEstTime/${issueId}`, estTime);
+    return res.data;
+  } 
+  catch (error){
+    console.error("Kunde inte skapa time estimate:", error);
+    throw error;
+  }
+
+
 }
