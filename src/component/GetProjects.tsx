@@ -23,29 +23,41 @@ export function GetProjects() {
   }, []);
 
   return (
-    <>
-      <div>
-        <h3>Aktiva Projekt</h3>
-        <ul>
-          {activeProjects.map((project) => (
-            <li key={project.projectId}>
-              <Link to={`/project/${project.projectId}`}>
-                <h4>{project.title}</h4>
+    <div className="container mt-4">
+  <div className="row">
+    {/* Vänstra kolumnen - Aktiva projekt */}
+    <div className="col-md-6">
+      <h3>Aktiva Projekt</h3>
+      <div className="d-flex flex-column gap-3">
+        {activeProjects.map((project) => (
+          <Link
+           key={project.projectId}
+          to={`/project/${project.projectId}`}  className="card">
+
+            <div className="card-body">
+              <h5 className="card-title">{project.title}</h5>
+               </div>
               </Link>
-            </li>
-          ))}
-        </ul>
+           
+           
+        ))}
       </div>
-      <div>
-        <h3>Färdiga Projekt</h3>
-        <ul>
-          {finishedProjects.map((project) => (
-            <li key={project.projectId}>
-              <h4>{project.title}</h4>
-            </li>
-          ))}
-        </ul>
+    </div>
+
+    {/* Högra kolumnen - Färdiga projekt */}
+    <div className="col-md-6">
+      <h3>Färdiga Projekt</h3>
+      <div className="d-flex flex-column gap-3">
+        {finishedProjects.map((project) => (
+          <div key={project.projectId} className="card">
+            <div className="card-body">
+              <h5 className="card-title">{project.title}</h5>
+            </div>
+          </div>
+        ))}
       </div>
-    </>
+    </div>
+  </div>
+</div>
   );
 }
