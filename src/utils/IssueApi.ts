@@ -17,9 +17,10 @@ export async function PostIssues() {
 }
 
 
-export async function GetInactiveIssue() {
+export async function getInactiveIssues(projectId: string) {
     try{
-        const respone = await axios.get(`${BASE_URL}/inactiveIssues`);
+        const respone = await axios.get(`${BASE_URL}/inactiveIssues/${projectId}`);
+         console.log("API-response:", respone);
         return respone.data;
     }
     catch (error){
@@ -29,10 +30,10 @@ export async function GetInactiveIssue() {
 
 }
 
-export async function ActiveIssue() {
+export async function ActiveIssues(projectId: string) {
 
      try{
-        const respone = await axios.get(`${BASE_URL}/activeIssues`);
+        const respone = await axios.get(`${BASE_URL}/activeIssues/${projectId}`);
         return respone.data;
     }
     catch (error){
@@ -41,9 +42,9 @@ export async function ActiveIssue() {
     }
 }
 
-export async function FinishedIssues(){
+export async function FinishedIssues(projectId: string) {
      try{
-        const respone = await axios.get(`${BASE_URL}/finishedIssues`);
+        const respone = await axios.get(`${BASE_URL}/finishedIssues/${projectId}`);
         return respone.data;
     }
     catch (error){
@@ -63,17 +64,7 @@ export async function postIssueToProject(projectId:string, issueData: { issueTit
     }
 }
 
-//Funktion för att hämta inaktiva issues för ett projekt
-export async function getInactiveIssus(projectId: string) {
-    try{
-        const response = await axios.get(`${BASE_URL}/inactiveIssues/${projectId}`);
-        return response.data;
-    }
-    catch (error){
-        console.error("Kunde inte hämta inaktiva issues för projektet:", error);
-        throw error;
-    }
-}
+
 
 //Funktion för att hämata ett specifikt issue by id
 export async function getIssueById(issueId: string) {
@@ -89,7 +80,7 @@ export async function getIssueById(issueId: string) {
 //Funktion för att lägga time estimate till en issue
 export async function patchEstimatedTime(estTime: EstimatedTime, issueId: string) {
   try{
-    const res = await axios.patch(`${BASE_EST_URL}/updateEstime/${issueId}`, estTime);
+    const res = await axios.patch(`${BASE_EST_URL}/updateEstTime/${issueId}`, estTime);
     return res.data;
   } 
   catch (error){
