@@ -1,54 +1,52 @@
-# React + TypeScript + Vite
+# PigeonApp – Projekt- och Issuehantering
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+PigeonApp är fontenden till en webbapplikation byggd med **React**, **TypeScript** och **Vite** för att hantera projekt, issues och medlemmar. Applikationen är framtagen som en inlämningsuppgift och har följande funktionalitet:
 
-Currently, two official plugins are available:
+## Funktioner
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Skapa projekt:** Lägg till nya projekt och ange projektmedlemmar.
+- **Visa projekt:** Se en översikt över aktiva och färdiga projekt.
+- **Projektvy:** Klicka på ett projekt för att se detaljer och tillhörande issues.
+- **Skapa issues:** Lägg till nya issues till ett projekt med titel och beskrivning.
+- **Visa issues:** Se en lista över inaktiva issues för ett projekt.
+- **Klicka på ett issue** Klicka på ett inaktivt issue för att lägga till estimerad tid.
+- **Visa issues:** Se en lista över aktiva issues för ett projekt.
+- **Klicka på aktivissue** när issuet är klart klicka på den och lägg till den faktiska tiden.
+- **Visa issues:** Se en lista över färdiga issues för ett projekt.
+- **Statistik** Se statistik för färdiga projekt.
+- **Navigering:** Enkel navigering mellan startsida, projektöversikt och projekt.
 
-## Expanding the ESLint configuration
+## Teknologier
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React 19 + TypeScript
+- Vite
+- React Bootstrap
+- Axios (för API-anrop)
+- React Router
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Kom igång
+
+Innan du kan komma igång klona ner repot
+
+```git clone https://github.com/hppy-squid/PigeonApp-Grupp2
+   cd API-PigeonApp-grupp2
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+1. **Installera beroenden:**
+   ```sh
+   npm install
+   ```
+2. **Starta utvecklingsservern:**
+   ```sh
+   npm run dev
+   ```
+3. **Bygg för produktion:**
+   ```sh
+   npm run build
+   ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+> Backend måste vara igång på `localhost:8080` för att API-anropen ska fungera.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+Länk till API: https://github.com/hppy-squid/API-PigeonApp-grupp2
+
+---
