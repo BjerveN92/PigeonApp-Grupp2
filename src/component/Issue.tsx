@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
 import { postIssueToProject, getIssuesByProjectId } from "../utils/IssueApi";
 import type { Issue } from "../type/Interface";
+import { Link } from "react-router-dom";
 
 export function Issue(){
     //Hämtar projektId från url
@@ -91,8 +92,12 @@ export function Issue(){
             <ListGroup style={{maxWidth: "600px"}}>
                 {issues.map((issue) => (
                     <ListGroup.Item key={issue.issueId}>
-                        <strong>{issue.issueTitle}</strong> - {issue.issueDescription}
-                        <br />
+                        <Link to={`project/${projectId}/issue/${issue.issueId}`}>
+                            <strong>{issue.issueTitle}</strong> 
+                        </Link>
+                        <div>
+                            - {issue.issueDescription}
+                        </div>
                         <span className="text-muted">Status: {issue.issueStatus}</span>
                     </ListGroup.Item>
                 ))}

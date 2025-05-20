@@ -62,7 +62,7 @@ export async function postIssueToProject(projectId:string, issueData: { issueTit
 }
 
 //Funktion för att visa alla issues i ett projekt
-//Backend: /api/issues/project/{projectId}
+//Backend: /api/issues/inactiveIssues/project/{projectId}
 
 export async function getIssuesByProjectId(projectId: string) {
     try{

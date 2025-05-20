@@ -2,7 +2,7 @@ import { Button } from "react-bootstrap";
 import { FormProject } from "./FormProject";
 import { GetProjects } from "./GetProjects";
 import { useNavigate } from "react-router-dom";
-import { Issue } from "./Issue";
+
 
 function ProjectOverview() {
   const navigate = useNavigate();
@@ -16,7 +16,6 @@ function ProjectOverview() {
       </header>
       <FormProject />
       <GetProjects />
-      <Issue />
       <Button variant="danger" onClick={backToHome}>
         Tillbaka
       </Button>

@@ -3,6 +3,7 @@ import "./App.css";
 import Home from "./component/Home";
 import { Project } from "./component/Project";
 import ProjectOverview from "./component/ProjectOverview";
+//import EstimatedTime from "./component/EstimatedTime";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/projectoverview" element={<ProjectOverview />} />
         <Route path="/project/:projectId" element={<Project />} />
+        
       </Routes>
     </>
   );
