@@ -1,0 +1,36 @@
+body {
+    background-image: url('/public/pigeon-bg.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    
+}
+h2{
+    text-align: center;
+    color:rgb(41, 37, 37);
+   text-shadow: 1px 1px 6px rgb(251, 248, 248);
+   padding-top: 30px;
+}
+
+p{
+    text-align: center;
+    padding-right: 700px;
+    padding-top: 50px;
+    line-height: 2;
+    margin: 0 auto;
+    color: rgb(255, 255, 255);
+    text-shadow: 1px 1px 6px rgb(0, 0, 0);
+}
+
+.home-button {
+    position: relative;
+    top: 100px;    
+    left: 520px;    
+    padding: 15px 30px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
