@@ -3,6 +3,7 @@ import { FormProject } from "./FormProject";
 import { GetProjects } from "./GetProjects";
 import { useNavigate } from "react-router-dom";
 
+
 function ProjectOverview() {
   const navigate = useNavigate();
   const backToHome = () => {
@@ -14,7 +15,6 @@ function ProjectOverview() {
         <h1>Project översikt</h1>
       </header>
       <FormProject />
-
       <GetProjects />
       <Button variant="danger" onClick={backToHome}>
         Tillbaka

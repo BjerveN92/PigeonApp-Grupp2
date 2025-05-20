@@ -3,6 +3,7 @@ import type { Project } from "../type/Interface";
 import { useNavigate, useParams } from "react-router-dom";
 import { getProjectById } from "../utils/ProjectApi";
 import { Button } from "react-bootstrap";
+import { Issue } from "./Issue";
 
 export function Project() {
   const navigate = useNavigate();
@@ -23,12 +24,15 @@ export function Project() {
   }
 
   return (
-    <header>
-      <h1>{project.title}</h1>
-
-      <Button variant="danger" onClick={backToProjects}>
+    <div>
+      <header>
+        <h1>{project.title}</h1>
+        <Issue />
+        <Button variant="danger" onClick={backToProjects}>
         Tillbaka
       </Button>
-    </header>
+    </header>  
+    </div>
+
   );
 }
