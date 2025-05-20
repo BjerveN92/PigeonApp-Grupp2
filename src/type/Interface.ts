@@ -24,10 +24,10 @@ export interface Issue{
 
 // interface för estimated time
 export interface EstimatedTime{
-    estimatedTimeId: string;
-    issueId: string;
+    estimatedTimeId?: string;
+    issueId?: string;
     timeEstimate: number;
-    memberId: string;
+    memberId?: string;
     
 
 }

@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
-import { postIssueToProject, getIssuesByProjectId } from "../utils/IssueApi";
+import { postIssueToProject, getInactiveIssus } from "../utils/IssueApi";
 import type { Issue } from "../type/Interface";
 import { Link } from "react-router-dom";
 
@@ -27,7 +27,7 @@ export function Issue(){
 
     const fetchIssues = async () => {
         try {
-            const data = await getIssuesByProjectId(projectId!);
+            const data = await getInactiveIssus(projectId!);
             setIssues(data);
         } catch (error) {
             console.error("Fel när hämtade issues:", error);
@@ -92,7 +92,7 @@ export function Issue(){
             <ListGroup style={{maxWidth: "600px"}}>
                 {issues.map((issue) => (
                     <ListGroup.Item key={issue.issueId}>
-                        <Link to={`project/${projectId}/issue/${issue.issueId}`}>
+                        <Link to={`/project/${projectId}/issue/${issue.issueId}`}>
                             <strong>{issue.issueTitle}</strong> 
                         </Link>
                         <div>
