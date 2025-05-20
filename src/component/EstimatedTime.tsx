@@ -4,8 +4,9 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
 import type { EstimatedTime, Issue, Member } from "../type/Interface";
-import { getProjectById } from "../utils/ProjectApi";
+//import { getProjectById } from "../utils/ProjectApi";
 import { getIssueById, patchEstimatedTime } from "../utils/IssueApi";
+import { getMembersByProjectId } from "../utils/MemberApi";
 
 export function EstimatedTime() {
   const navigate = useNavigate();
@@ -19,7 +20,10 @@ export function EstimatedTime() {
 
   useEffect(() => {
     if (projectId) {
-      getProjectById(projectId).then((proj) => setMembers(proj.members));
+      //getProjectById(projectId).then((proj) => setMembers(proj.members));
+      getMembersByProjectId(projectId).then((fetchedMembers) => 
+        setMembers(fetchedMembers)
+    );
     }
     if (issueId) {
       getIssueById(issueId).then((iss) => {
@@ -34,21 +38,33 @@ export function EstimatedTime() {
 
     if (!selectedMember || !time || !issueId) return;
 
-    const newEstTime = {
-      memberId: selectedMember,
-      timeEstimate: Number(time),
-      issueId: issueId,
-      
-    };
-    console.log("newEstTime object:", newEstTime);
+
     try {
-      await patchEstimatedTime(newEstTime.timeEstimate, issueId);
+      //Hämtar aktuell issue
+      const currentIssue = await getIssueById(issueId);
 
-      const updatedIssue = await getIssueById(issueId);
-      setIssue(updatedIssue);
-      setEstimatedTimes(updatedIssue.estimatedTimes);
-      console.log("Estimering sparad" + updatedIssue);
+      //Skapar nytt estimatedTime-objekt med uppdaterade värden
+      const newEstimatedTime = {
+        estimatedTimeId: crypto.randomUUID(),
+        memberId: selectedMember,
+        timeEstimate: Number(time),
+      }
 
+      //Skapar en ny version av issue med uppdaterd listan
+      const updatedIssue = {
+        ...currentIssue,
+        estimatedTimes: [
+          ...(currentIssue.estimatedTimes || []), 
+          newEstimatedTime,
+        ],
+      };
+      //Skickar Patch request till backend för att uppdatera issue
+      await patchEstimatedTime(updatedIssue, issueId);
+
+      //Uppdaterar state med uppdaterad issue
+      const refreshedIssue = await getIssueById(issueId);
+      setIssue(refreshedIssue);
+      setEstimatedTimes(refreshedIssue.estimatedTimes);
       setSelectedMember("");
       setTime("");
     } catch (error) {
@@ -111,7 +127,7 @@ export function EstimatedTime() {
       <Button
         variant="secondary"
         className="mt-4"
-        onClick={() => navigate(`/projects/${projectId}`)}
+        onClick={() => navigate(-1)}
       >
         Tillbaka till projekt
       </Button>

@@ -1,6 +1,8 @@
 
 import axios from "axios";
-import type { EstimatedTime } from "../type/Interface";
+//import type { EstimatedTime } from "../type/Interface";
+import type { Issue } from "../type/Interface";
+
 const BASE_URL = 'http://localhost:8080/api/issues';
 const BASE_EST_URL = 'http://localhost:8080/api/estTime';
 
@@ -78,16 +80,21 @@ export async function getIssueById(issueId: string) {
     }
 }
 //Funktion för att lägga time estimate till en issue
-export async function patchEstimatedTime(estTime: Number, issueId: string) {
+export async function patchEstimatedTime(issue: Issue, issueId: string) {
   try{
-    const res = await axios.patch(`${BASE_EST_URL}/updateEstTime/${issueId}`, estTime);
-    console.log("Time estimate uppdaterad:", res.data);
+    const res = await axios.patch(`${BASE_EST_URL}/updateEstTime/${issueId}`, 
+    issue,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+    );    
     return res.data;
-  } 
-  catch (error){
+  } catch (error){
     console.error("Kunde inte skapa time estimate:", error);
     throw error;
   }
 
-
 }
+
