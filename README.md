@@ -28,7 +28,8 @@ PigeonApp är fontenden till en webbapplikation byggd med **React**, **TypeScrip
 
 Innan du kan komma igång klona ner repot
 
-```git clone https://github.com/hppy-squid/PigeonApp-Grupp2
+```sh
+git clone https://github.com/hppy-squid/PigeonApp-Grupp2
    cd API-PigeonApp-grupp2
 ```
 
