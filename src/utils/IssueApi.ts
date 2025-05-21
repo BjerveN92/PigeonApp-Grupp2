@@ -44,7 +44,7 @@ export async function ActiveIssues(projectId: string) {
     }
 }
 
-export async function FinishedIssues(projectId: string) {
+export async function DoneIssues(projectId: string) {
      try{
         const respone = await axios.get(`${BASE_URL}/finishedIssues/${projectId}`);
         return respone.data;
