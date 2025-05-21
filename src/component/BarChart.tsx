@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { FinishedIssues } from "../utils/IssueApi";
+import { DoneIssues } from "../utils/IssueApi";
 import type { Issue } from "../type/Interface";
 
 type StatisticsProps = {
@@ -14,7 +14,7 @@ export const TheBarChart: React.FC<StatisticsProps> = ({ projectId , projectTitl
     useEffect (() => {
         async function fetchData(){
             try {
-                const issues = await FinishedIssues(projectId);
+                const issues = await DoneIssues(projectId);
                 setData(issues);
             } catch (error) {
                 console.error("failed to fetch data", error)
