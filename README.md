@@ -26,25 +26,41 @@ PigeonApp är fontenden till en webbapplikation byggd med **React**, **TypeScrip
 
 ## Kom igång
 
-Innan du kan komma igång klona ner repot
+### Installation
 
-```sh
-git clone https://github.com/hppy-squid/PigeonApp-Grupp2
-   cd API-PigeonApp-grupp2
-```
+1. Klona repot  och gå till frontend-mappen:
 
-1. **Installera beroenden:**
+   ```sh
+   git clone https://github.com/hppy-squid/PigeonApp-Grupp2 
+   cd Grupp-inläming/Frontend/PigeonApp-Grupp2
+   ```
+
+   Gå till branch opponering!
+
+3. Installera beroenden:
+
    ```sh
    npm install
    ```
-2. **Starta utvecklingsservern:**
-   ```sh
-   npm run dev
-   ```
-3. **Bygg för produktion:**
-   ```sh
-   npm run build
-   ```
+
+### Starta utvecklingsserver
+
+```sh
+npm run dev
+```
+
+Applikationen körs nu på [http://localhost:5173](http://localhost:5173) (eller den port Vite anger).
+
+### Bygg för produktion
+
+```sh
+npm run build
+```
+
+### Lint
+
+```sh
+npm run lint
 
 > Backend måste vara igång på `localhost:8080` för att API-anropen ska fungera.
 
