@@ -51,4 +51,12 @@ export async function getProjectById(projectId: string) {
     }
 }
 
-
+// hämta alla projekt oavsett status
+export async function getAllProjects() {
+    try {
+        const respone = await axios.get(`${BASE_URL}/allProjects`);
+        return respone.data;
+    } catch (error) {
+        console.error("Error getting projects:", error);
+    }
+}
