@@ -9,9 +9,10 @@ type PopupActTimeProps = {
   show: boolean;
   onClose: () => void;
   issueId: string | undefined;
+  onSaved?: () => void;
 };
 
-function PopupActTime({ show, onClose, issueId }: PopupActTimeProps) {
+function PopupActTime({ show, onClose, issueId, onSaved }: PopupActTimeProps) {
   const [time, setTime] = useState("");
 
   const actualTime = async () => {
@@ -31,6 +32,10 @@ function PopupActTime({ show, onClose, issueId }: PopupActTimeProps) {
       // 3. Skicka hela objektet till patchActualTime
       await patchActualTime(updatedIssue, issueId);
       console.log("Tid uppdaterad:", time);
+      setTime("");
+      //stäng popup om det finns en tid i onSaved
+      if (onSaved) onSaved();
+      onClose();
     } catch (error) {
       console.error("Kunde inte uppdatera tid:", error);
     }
