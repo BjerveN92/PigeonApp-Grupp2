@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { getIssuesByProjectId } from "../utils/IssueApi";
+import { FinishedIssues } from "../utils/IssueApi";
 import type { Issue } from "../type/Interface";
 
 type StatisticsProps = {
@@ -8,13 +8,13 @@ type StatisticsProps = {
     projectTitle: string;
 };
 
-export const Statistics: React.FC<StatisticsProps> = ({ projectId , projectTitle }) => {
+export const TheBarChart: React.FC<StatisticsProps> = ({ projectId , projectTitle }) => {
     const [data, setData] = useState<Issue[]>([]);
-
+    // fetchar färdiga issues via projectID 
     useEffect (() => {
         async function fetchData(){
             try {
-                const issues = await getIssuesByProjectId(projectId);
+                const issues = await FinishedIssues(projectId);
                 setData(issues);
             } catch (error) {
                 console.error("failed to fetch data", error)
@@ -22,7 +22,7 @@ export const Statistics: React.FC<StatisticsProps> = ({ projectId , projectTitle
         }
         fetchData();
     },[projectId]);
-
+    // mappar igenom data-arrayen med issues 
     const chartData = data.map(issue => ({
         issueTitle: issue.issueTitle,
         estimatedTime: issue.avarageEstTime,

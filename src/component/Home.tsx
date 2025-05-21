@@ -33,6 +33,13 @@ function Home() {
         >
           Projekt översikt
         </Button>
+        <Button
+          className="stats-button"
+          variant="outline-light"
+          onClick={() => navigate("/statistik")}
+        >
+          Visa statistik
+        </Button>
       </div>
     </>
   );

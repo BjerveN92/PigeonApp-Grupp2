@@ -4,6 +4,7 @@ import Home from "./component/Home";
 import { Project } from "./component/Project";
 import ProjectOverview from "./component/ProjectOverview";
 import { EstimatedTime } from "./component/EstimatedTime";
+import { StatisticPage } from "./component/StatisticPage";
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <Route path="/projectoverview" element={<ProjectOverview />} />
         <Route path="/project/:projectId" element={<Project />} />
         <Route path="/project/:projectId/issue/:issueId" element={<EstimatedTime />} />
+        <Route path="/statistik" element={<StatisticPage/>}/>
       </Routes>
     </>
   );
