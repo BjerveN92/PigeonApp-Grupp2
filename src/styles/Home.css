@@ -1,19 +1,19 @@
-body {
-    background-image: url('/public/pigeon-bg.jpg'); 
+.home-container {
+    background-image: url('/pigeon-bg.jpg'); 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     min-height: 100vh;
     
 }
-h2{
+.home-container h2{
     text-align: center;
     color:rgb(41, 37, 37);
    text-shadow: 1px 1px 6px rgb(251, 248, 248);
    padding-top: 30px;
 }
 
-p{
+.home-container p{
     text-align: center;
     padding-right: 700px;
     padding-top: 50px;
@@ -22,15 +22,30 @@ p{
     color: rgb(255, 255, 255);
     text-shadow: 1px 1px 6px rgb(0, 0, 0);
 }
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+    padding-right: 700px;
+}
 
-.home-button {
+.home-button
+.stats-button {
     position: relative;
     top: 100px;    
-    left: 520px;    
+    left: 450px;    
     padding: 15px 30px;
     border-radius: 5px;
     text-decoration: none;
     font-weight: bold;
     font-size: 16px;
     cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .home-container p,
+  .button-container {
+    padding-right: 0;
+  }
 }
