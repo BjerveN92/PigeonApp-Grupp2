@@ -3,9 +3,10 @@ import { useParams } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
-import { postIssueToProject, getInactiveIssues } from "../utils/IssueApi";
+import { postIssueToProject, getInactiveIssues, ActiveIssues, DoneIssues } from "../utils/IssueApi";
 import type { Issue } from "../type/Interface";
 import { Link } from "react-router-dom";
+import type { IssueStatus } from "../type/Interface";
 
 export function Issue() {
   //Hämtar projektId från url
@@ -17,15 +18,34 @@ export function Issue() {
 
   //Lista med redan tillagda issues
   const [issues, setIssues] = useState<Issue[]>([]);
+  const [inactiveIssues, setInactiveIssues] = useState<Issue[]>([]);
+const [activeIssues, setActiveIssues] = useState<Issue[]>([]);
+const [doneIssues, setDoneIssues] = useState<Issue[]>([]);
 
   //Hämtar issues när komponenten laddas
-  useEffect(() => {
-    if (projectId) {
-      getInactiveIssues(projectId).then((data) => {
-        setIssues(data);
-      });
+ useEffect(() => {
+  if (!projectId) return;
+
+  const fetchIssues = async () => {
+    try {
+      const [inactive, active, done] = await Promise.all([
+        getInactiveIssues(projectId),
+        ActiveIssues(projectId),
+        DoneIssues(projectId)
+      ]);
+      setInactiveIssues(inactive);
+      setActiveIssues(active);
+      setDoneIssues(done);
+    } catch (error) {
+      console.error("Fel vid hämtning av issues:", error);
     }
-  }, [projectId]);
+  };
+
+  fetchIssues();
+}, [projectId]);
+
+
+  
   //Funktion för att skapa nytt issue
   const handleSaveIssue = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,8 +64,10 @@ export function Issue() {
     } catch (error) {
       console.error("Kunde inte spara issue:", error);
     }
-  };
+   
 
+  };
+   
   return (
     <div className="my-4">
       <h2>Lägg till issue</h2>
@@ -80,22 +102,83 @@ export function Issue() {
       </form>
 
       {/*Lista med redan tillagda issues*/}
-      <h3 className="mt-4">Inaktiva Issues</h3>
-      {issues.length === 0 ? (
-        <p>Inga issues tillagda.</p>
+      <div className="container mt-4">
+  <h2>Issues</h2>
+  <div className="row">
+    {/* Inaktiva issues */}
+    <div className="col-md-4">
+      <h4>Inaktiva</h4>
+      {inactiveIssues.length === 0 ? (
+        <p>Inga inaktiva issues.</p>
       ) : (
-        <ListGroup style={{ maxWidth: "600px" }}>
-          {issues.map((issue) => (
-            <ListGroup.Item key={issue.issueId}>
-              <Link to={`/project/${projectId}/issue/${issue.issueId}`}>
-                <strong>{issue.issueTitle}</strong>
+        <div className="d-flex flex-column gap-3">
+          {inactiveIssues.map(issue => (
+              <Link
+                key={issue.issueId}
+                to={`/project/${projectId}/issue/${issue.issueId}`}
+                className="card"
+              >
+                <div className="card-body">
+                  <h5 className="card-title">{issue.issueTitle}</h5>
+                  <p>{issue.issueDescription}</p>
+                  <span className="text-muted">Status: {issue.issueStatus}</span>
+                </div>
               </Link>
-              <div>- {issue.issueDescription}</div>
-              <span className="text-muted">Status: {issue.issueStatus}</span>
-            </ListGroup.Item>
-          ))}
-        </ListGroup>
+            ))}
+        </div>
       )}
+    </div>
+
+    {/* Aktiva issues */}
+    <div className="col-md-4">
+      <h4>Aktiva</h4>
+      {activeIssues.length === 0 ? (
+        <p>Inga aktiva issues.</p>
+      ) : (
+        <div className="d-flex flex-column gap-3">
+          {activeIssues.map(issue => (
+              <Link
+                key={issue.issueId}
+                to={`/project/${projectId}/issue/${issue.issueId}`}
+                className="card"
+              >
+                <div className="card-body">
+                  <h5 className="card-title">{issue.issueTitle}</h5>
+                  <p>{issue.issueDescription}</p>
+                  <span className="text-muted">Status: {issue.issueStatus}</span>
+                </div>
+              </Link>
+            ))}
+        </div>
+      )}
+    </div>
+
+    {/* Avslutade issues */}
+    <div className="col-md-4">
+      <h4>Avslutade</h4>
+      {doneIssues.length === 0 ? (
+        <p>Inga avslutade issues.</p>
+      ) : (
+        <div className="d-flex flex-column gap-3">
+          {doneIssues.map(issue => (
+              <Link
+                key={issue.issueId}
+                to={`/project/${projectId}/issue/${issue.issueId}`}
+                className="card"
+              >
+                <div className="card-body">
+                  <h5 className="card-title">{issue.issueTitle}</h5>
+                  <p>{issue.issueDescription}</p>
+                  <span className="text-muted">Status: {issue.issueStatus}</span>
+                </div>
+              </Link>
+            ))}
+        </div>
+      )}
+    </div>
+  </div>
+</div>
+
     </div>
   );
 }
