@@ -6,6 +6,7 @@ import type { Issue } from "../type/Interface";
 const BASE_URL = 'http://localhost:8080/api/issues';
 const BASE_EST_URL = 'http://localhost:8080/api/estTime';
 
+//lägg till ny issue
 export async function PostIssues() {
     try{
         const respone = await axios.post(`${BASE_URL}/newIssue`);

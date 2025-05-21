@@ -13,14 +13,14 @@ export interface Member{
 
 // inteface för issue
 export interface Issue{
-    issueId: string;
-    projectId: string;
+    issueId?: string;
+    projectId?: string;
     issueTitle: string;
     issueDescription: string;
-    avarageEstTime:number;
-    actualTime:number;
-    issueStatus:IssueStatus;
-    estimatedTimes: EstimatedTime[]; 
+    avarageEstTime?:number;
+    actualTime?:number;
+    issueStatus?:IssueStatus;
+    estimatedTimes?: EstimatedTime[]; 
 }
 
 
