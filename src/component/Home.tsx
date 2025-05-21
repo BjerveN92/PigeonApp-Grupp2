@@ -7,7 +7,7 @@ function Home() {
 
   return (
     <>
-      <div>
+      <div className="home-container">
         <h2>
           Pigeon – det smarta sättet att skicka tidsuppskattningar istället för
           bara meddelanden!
@@ -26,20 +26,22 @@ function Home() {
           gör ni det snyggt, effektivt
           <br />– via Planning Poker direkt i Pigeon.
         </p>
-        <Button
-          className="home-button"
-          variant="outline-light"
-          onClick={() => navigate("/projectoverview")}
-        >
-          Projekt översikt
-        </Button>
-        <Button
-          className="stats-button"
-          variant="outline-light"
-          onClick={() => navigate("/statistik")}
-        >
-          Visa statistik
-        </Button>
+        <div className="button-container">
+          <Button
+            className="home-button"
+            variant="outline-light"
+            onClick={() => navigate("/projectoverview")}
+          >
+            Projekt översikt
+          </Button>
+          <Button
+            className="stats-button"
+            variant="outline-light"
+            onClick={() => navigate("/statistik")}
+          >
+            Visa statistik
+          </Button>
+        </div>
       </div>
     </>
   );
