@@ -1,5 +1,5 @@
 import { TheBarChart } from "./BarChart";
-import { getFinishedProject } from "../utils/ProjectApi";
+import { getAllProjects } from "../utils/ProjectApi";
 import type { Project } from "../type/Interface";
 import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
@@ -17,7 +17,7 @@ export function StatisticPage() {
     useEffect (() => {
         async function fetchProjects() {
             try {
-                const data = await getFinishedProject();
+                const data = await getAllProjects();
                 setProjects(data);
                 if (data.length > 0) setSelectedProject(data[0]);
             } catch (error) {
