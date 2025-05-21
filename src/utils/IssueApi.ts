@@ -97,4 +97,23 @@ export async function patchEstimatedTime(issue: Issue, issueId: string) {
   }
 
 }
+  // funktion för att uppdatera issue med faktiskt tid
+
+  export async function patchActualTime(issue: Issue, issueId: string) {
+  try{
+    const res = await axios.patch(`${BASE_EST_URL}/actualTime/${issueId}`, 
+    issue,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+    );    
+    return res.data;
+  } catch (error){
+    console.error("Kunde inte skapa time estimate:", error);
+    throw error;
+  }
+
+}
 

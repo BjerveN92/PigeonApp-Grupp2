@@ -1,6 +1,8 @@
 
 // enum for issue status
-export type IssueStatus = "ACTIVE" | "INACTIVE" | "DONE";
+
+export type IssueStatus = "INACTIVE" | "ACTIVE" | "DONE";
+
 
 // inteface för medlemmar
 export interface Member{
