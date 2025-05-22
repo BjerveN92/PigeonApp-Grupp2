@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { getMembersByProjectId } from "../utils/MemberApi";
 
 import {
   postIssueToProject,
@@ -10,7 +11,7 @@ import {
   DoneIssues,
   patchIssueStatus,
 } from "../utils/IssueApi";
-import type { Issue } from "../type/Interface";
+import type { Issue, Member } from "../type/Interface";
 import { Link } from "react-router-dom";
 import PopupActTime from "./PopupActTime";
 
@@ -19,6 +20,7 @@ export function Issue() {
   const { projectId } = useParams();
 
   //States för formular
+  const [members, setMembers] = useState<Member[]>([]);
   const [issueTitle, setIssueTitle] = useState("");
   const [issueDescription, setIssueDescription] = useState("");
   const [showPopup, setShowPopup] = useState(false);
@@ -33,7 +35,11 @@ export function Issue() {
   const [doneIssues, setDoneIssues] = useState<Issue[]>([]);
   const [show, setShowAlert] = useState(false);
 
-  //const allMembersHaveTime = members.length > 0 && members.length === estimatedTimes.length;
+  // hämtar medlemmarna för projektet
+  useEffect(() => {
+    if (!projectId) return;
+    getMembersByProjectId(projectId).then(setMembers);
+  }, [projectId]);
 
   const fetchIssues = async () => {
     if (!projectId) return;
@@ -85,6 +91,23 @@ export function Issue() {
     }
   };
 
+  // funktion för att om alla medlemmar har lagt sin tid
+  const allMembersEstimated = (issue: Issue) => {
+    if (!issue.estimatedTimes || members.length === 0) return false;
+
+    const estimatedIds = issue.estimatedTimes.map((et) => String(et.memberId));
+
+    const estimatedCount = members.filter((m) =>
+      estimatedIds.includes(String(m.memberId))
+    ).length;
+    return estimatedCount === members.length;
+  };
+  inactiveIssues.forEach((issue) => {
+    console.log("Issue:", issue.issueTitle);
+    console.log("estimatedTimes:", issue.estimatedTimes);
+    console.log("members:", members);
+    console.log("allMembersEstimated:", allMembersEstimated(issue));
+  });
   return (
     <div className="my-4">
       <h2>Lägg till issue</h2>
@@ -150,6 +173,7 @@ export function Issue() {
                         await handleActivateIssue(issue.issueId);
                         setShowAlert(true);
                       }}
+                      disabled={!allMembersEstimated(issue)}
                     >
                       Aktivera issue
                     </Button>
