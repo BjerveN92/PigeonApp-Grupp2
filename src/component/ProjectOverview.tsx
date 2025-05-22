@@ -1,7 +1,5 @@
-import { Button } from "react-bootstrap";
 import { FormProject } from "./FormProject";
 import { GetProjects } from "./GetProjects";
-import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import {
   getActiveProject,
@@ -11,7 +9,6 @@ import {
 import type { Project } from "../type/Interface";
 
 function ProjectOverview() {
-  const navigate = useNavigate();
   const [activeProjects, setActiveProjects] = useState<Project[]>([]);
   const [finishedProjects, setFinishedProjects] = useState<Project[]>([]);
 
@@ -41,9 +38,6 @@ function ProjectOverview() {
     setActiveProjects((prev) => [...prev, newProject]);
   };
 
-  const backToHome = () => {
-    navigate("/");
-  };
   return (
     <>
       <header>
@@ -55,9 +49,6 @@ function ProjectOverview() {
         finishedProjects={finishedProjects}
         onProjectStatus={handleProjectStatus}
       />
-      <Button variant="danger" onClick={backToHome}>
-        Tillbaka
-      </Button>
     </>
   );
 }

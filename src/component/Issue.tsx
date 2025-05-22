@@ -33,7 +33,6 @@ export function Issue() {
   const [inactiveIssues, setInactiveIssues] = useState<Issue[]>([]);
   const [activeIssues, setActiveIssues] = useState<Issue[]>([]);
   const [doneIssues, setDoneIssues] = useState<Issue[]>([]);
-  const [show, setShowAlert] = useState(false);
 
   // hämtar medlemmarna för projektet
   useEffect(() => {
@@ -171,7 +170,6 @@ export function Issue() {
                       className="m-3 position-relative"
                       onClick={async () => {
                         await handleActivateIssue(issue.issueId);
-                        setShowAlert(true);
                       }}
                       disabled={!allMembersEstimated(issue)}
                     >
@@ -210,7 +208,6 @@ export function Issue() {
                           e.stopPropagation();
                           e.preventDefault();
                           await handleActivateIssue(issue.issueId);
-                          setShowAlert(true);
                         }}
                       >
                         Klar markera issue
@@ -253,7 +250,6 @@ export function Issue() {
                   show={showPopup}
                   onClose={() => setShowPopup(false)}
                   issueId={selectedIssueId}
-                  onSaved={() => setShowAlert(true)}
                 />
               </div>
             )}
