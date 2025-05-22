@@ -117,4 +117,18 @@ export async function patchEstimatedTime(issue: Issue, issueId: string) {
   }
 
 }
+ //Funktion för att uppdatera issue med status
+// Funktionen skickar PATCH-request till nya endpointen
+export async function patchIssueStatus(issueId: string) {
+  try {
+    const res = await axios.patch(
+      `${BASE_URL}/updateIssueStatus/${issueId}`, 
+    );
+    return res.data;
+  } catch (error) {
+    console.error("Kunde inte uppdatera issueStatus:", error);
+    throw error;
+  }
+}
+
 

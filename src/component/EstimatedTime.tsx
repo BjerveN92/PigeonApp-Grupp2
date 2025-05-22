@@ -27,11 +27,24 @@ export function EstimatedTime() {
     }
     if (issueId) {
       getIssueById(issueId).then((iss) => {
+        console.log("Issue hämtad från backend:", iss);        
         setIssue(iss);
         setEstimatedTimes(iss.estimatedTimes);
       });
     }
   }, [projectId, issueId]);
+
+  //Kollar om alla medlemmar har lagt tid
+/*    const allMembersHaveTime = members.length > 0 && members.every((member) =>
+    estimatedTimes.some((et) => et.memberId === member.memberId)
+  );  */
+
+
+  
+/*   console.log("members:", members);
+  console.log("estimatedTimes:", estimatedTimes);
+  console.log("Alla medlemmar har lagt tid:", allMembersHaveTime); */
+  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,18 +59,24 @@ export function EstimatedTime() {
       //Skapar nytt estimatedTime-objekt med uppdaterade värden
       const newEstimatedTime = {
         estimatedTimeId: crypto.randomUUID(),
+        issueId: issueId,
         memberId: selectedMember,
         timeEstimate: Number(time),
       }
+      console.log("Ny estimerad tid:", newEstimatedTime);
+           
 
       //Skapar en ny version av issue med uppdaterd listan
       const updatedIssue = {
         ...currentIssue,
+        memberId: selectedMember,
+        timeEstimate: Number(time),
         estimatedTimes: [
           ...(currentIssue.estimatedTimes || []), 
           newEstimatedTime,
         ],
       };
+      console.log("Uppdaterad issue:", updatedIssue);
       //Skickar Patch request till backend för att uppdatera issue
       await patchEstimatedTime(updatedIssue, issueId);
 
@@ -71,6 +90,12 @@ export function EstimatedTime() {
       console.error("Fel vid post av estimering:", error);
     }
   };
+
+
+
+  if (!issue || !members) {
+  return <div>Laddar data...</div>;
+}
 
   return (
     <div className="my-4" style={{ maxWidth: "500px" }}>
@@ -124,8 +149,9 @@ export function EstimatedTime() {
         </ListGroup>
       )}
 
+      <br />      
       <Button
-        variant="secondary"
+        variant="danger"
         className="mt-4"
         onClick={() => navigate(-1)}
       >
