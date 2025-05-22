@@ -5,7 +5,11 @@ import { useState } from "react";
 import { postProject } from "../utils/ProjectApi";
 import type { Project } from "../type/Interface";
 
-export function FormProject() {
+export function FormProject({
+  onAddProject,
+}: {
+  onAddProject: (project: Project) => void;
+}) {
   const [title, setTitle] = useState("");
   const [memberName, setMemberName] = useState<string[]>([]);
   const [currentMember, setCurrentMember] = useState("");
@@ -34,10 +38,13 @@ export function FormProject() {
       })),
       issues: [],
     };
-
+    console.log("Nytt projekt:", newProject);
     // Skicka projektet till servern
     const result = await postProject(newProject);
     console.log("Projekt sparat:", result);
+
+    onAddProject(result); // Lägg till det nya projektet i listan
+
     setTitle("");
     setMemberName([]);
     setCurrentMember("");
@@ -59,6 +66,7 @@ export function FormProject() {
             placeholder="Ange projektnamn"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            required
           />
         </Form.Group>
 
@@ -79,6 +87,7 @@ export function FormProject() {
             placeholder="Ange medlem"
             value={currentMember}
             onChange={(e) => setCurrentMember(e.target.value)}
+            required
           />
         </Form.Group>
 

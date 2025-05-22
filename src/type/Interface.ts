@@ -29,7 +29,7 @@ export interface EstimatedTime{
     estimatedTimeId?: string;
     issueId?: string;
     timeEstimate: number;
-    memberId: string;
+    memberId?: string;
     
 
 }

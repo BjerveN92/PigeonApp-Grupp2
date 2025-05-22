@@ -25,14 +25,15 @@ export function Project() {
 
   return (
     <div>
+      <Button variant="danger" onClick={backToProjects}>
+        Tillbaka till projektöversikt
+      </Button>
       <header>
         <h1>{project.title}</h1>
+      </header>
+      <div>
         <Issue />
-        <Button variant="danger" onClick={backToProjects}>
-        Tillbaka
-      </Button>
-    </header>  
+      </div>
     </div>
-
   );
 }
