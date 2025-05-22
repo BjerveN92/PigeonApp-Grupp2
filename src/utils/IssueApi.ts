@@ -3,8 +3,8 @@ import axios from "axios";
 //import type { EstimatedTime } from "../type/Interface";
 import type { Issue } from "../type/Interface";
 
-const BASE_URL = 'http://localhost:8080/api/issues';
-const BASE_EST_URL = 'http://localhost:8080/api/estTime';
+const BASE_URL = 'https://api-pigeonapp-grupp2.onrender.com/api/issues';
+const BASE_EST_URL = 'https://api-pigeonapp-grupp2.onrender.com/api/estTime';
 
 //lägg till ny issue
 export async function PostIssues() {

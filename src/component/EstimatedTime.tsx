@@ -4,7 +4,6 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
 import type { EstimatedTime, Issue, Member } from "../type/Interface";
-//import { getProjectById } from "../utils/ProjectApi";
 import { getIssueById, patchEstimatedTime } from "../utils/IssueApi";
 import { getMembersByProjectId } from "../utils/MemberApi";
 
@@ -20,7 +19,6 @@ export function EstimatedTime() {
 
   useEffect(() => {
     if (projectId) {
-      //getProjectById(projectId).then((proj) => setMembers(proj.members));
       getMembersByProjectId(projectId).then((fetchedMembers) =>
         setMembers(fetchedMembers)
       );
@@ -34,14 +32,6 @@ export function EstimatedTime() {
     }
   }, [projectId, issueId]);
 
-  //Kollar om alla medlemmar har lagt tid
-  /*    const allMembersHaveTime = members.length > 0 && members.every((member) =>
-    estimatedTimes.some((et) => et.memberId === member.memberId)
-  );  */
-
-  /*   console.log("members:", members);
-  console.log("estimatedTimes:", estimatedTimes);
-  console.log("Alla medlemmar har lagt tid:", allMembersHaveTime); */
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

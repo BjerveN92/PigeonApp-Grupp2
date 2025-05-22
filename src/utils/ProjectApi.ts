@@ -1,6 +1,6 @@
 import axios from "axios";
 import type { Project } from "../type/Interface";
-const BASE_URL = "http://localhost:8080/api/projects";
+const BASE_URL = "https://api-pigeonapp-grupp2.onrender.com/api/projects";
 
 
 // Skapa nytt projekt
