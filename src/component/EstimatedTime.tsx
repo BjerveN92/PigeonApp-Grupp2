@@ -4,7 +4,6 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
 import type { EstimatedTime, Issue, Member } from "../type/Interface";
-//import { getProjectById } from "../utils/ProjectApi";
 import { getIssueById, patchEstimatedTime } from "../utils/IssueApi";
 import { getMembersByProjectId } from "../utils/MemberApi";
 
@@ -20,7 +19,6 @@ export function EstimatedTime() {
 
   useEffect(() => {
     if (projectId) {
-      //getProjectById(projectId).then((proj) => setMembers(proj.members));
       getMembersByProjectId(projectId).then((fetchedMembers) =>
         setMembers(fetchedMembers)
       );
@@ -33,15 +31,6 @@ export function EstimatedTime() {
       });
     }
   }, [projectId, issueId]);
-
-  //Kollar om alla medlemmar har lagt tid
-  /*    const allMembersHaveTime = members.length > 0 && members.every((member) =>
-    estimatedTimes.some((et) => et.memberId === member.memberId)
-  );  */
-
-  /*   console.log("members:", members);
-  console.log("estimatedTimes:", estimatedTimes);
-  console.log("Alla medlemmar har lagt tid:", allMembersHaveTime); */
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -81,6 +70,12 @@ export function EstimatedTime() {
       console.error("Fel vid post av estimering:", error);
     }
   };
+  // denna funktion kollar ifall alla medlemmar lagt sin tid innan tiden visas
+  const allMembersHaveTime =
+    members.length > 0 &&
+    members.every((member) =>
+      estimatedTimes.some((et) => et.memberId === member.memberId)
+    );
 
   if (!issue || !members) {
     return <div>Laddar data...</div>;
@@ -98,11 +93,16 @@ export function EstimatedTime() {
             required
           >
             <option value="">--Välj medlem--</option>
-            {members.map((member) => (
-              <option key={member.memberId} value={member.memberId}>
-                {member.memberName}
-              </option>
-            ))}
+            {members
+              .filter(
+                (member) =>
+                  !estimatedTimes.some((et) => et.memberId === member.memberId)
+              )
+              .map((member) => (
+                <option key={member.memberId} value={member.memberId}>
+                  {member.memberName}
+                </option>
+              ))}
           </Form.Select>
         </Form.Group>
 
@@ -122,8 +122,8 @@ export function EstimatedTime() {
       </Form>
 
       <h3 className="mt-4">Estimerade tid från medlemmarna</h3>
-      {estimatedTimes.length === 0 ? (
-        <p>Inga tidsestimeringar tillgängliga.</p>
+      {!allMembersHaveTime ? (
+        <p>Namnen visas när alla har lagt till sin tid.</p>
       ) : (
         <ListGroup>
           {estimatedTimes.map((et) => {
