@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import ListGroup from "react-bootstrap/ListGroup";
+
 import {
   postIssueToProject,
   getInactiveIssues,
@@ -12,7 +12,6 @@ import {
 } from "../utils/IssueApi";
 import type { Issue } from "../type/Interface";
 import { Link } from "react-router-dom";
-import type { IssueStatus } from "../type/Interface";
 import PopupActTime from "./PopupActTime";
 
 export function Issue() {
@@ -28,11 +27,11 @@ export function Issue() {
   );
 
   //Lista med redan tillagda issues
-  const [issues, setIssues] = useState<Issue[]>([]);
+
   const [inactiveIssues, setInactiveIssues] = useState<Issue[]>([]);
   const [activeIssues, setActiveIssues] = useState<Issue[]>([]);
   const [doneIssues, setDoneIssues] = useState<Issue[]>([]);
-  const [showAlert, setShowAlert] = useState(false);
+  const [show, setShowAlert] = useState(false);
 
   //const allMembersHaveTime = members.length > 0 && members.length === estimatedTimes.length;
 
@@ -84,7 +83,6 @@ export function Issue() {
     } catch (error) {
       console.error("Kunde inte aktivera issue:", error);
     }
-      
   };
 
   return (
@@ -132,29 +130,30 @@ export function Issue() {
             ) : (
               <div className="d-flex flex-column gap-3">
                 {inactiveIssues.map((issue) => (
-                  <Link
-                    key={issue.issueId}
-                    to={`/project/${projectId}/issue/${issue.issueId}`}
-                    className="card"
-                  >
-                    <div className="card-body">
-                      <h5 className="card-title">{issue.issueTitle}</h5>
-                      <p>{issue.issueDescription}</p>
-                      <span className="text-muted">
-                        Status: {issue.issueStatus}
-                      </span>
-
-                      <Button
-                        variant="success"
-                        className="mt-3"
-                        onClick={async () => {
+                  <div key={issue.issueId} className="card position-relative">
+                    <Link
+                      to={`/project/${projectId}/issue/${issue.issueId}`}
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      <div className="card-body">
+                        <h5 className="card-title">{issue.issueTitle}</h5>
+                        <p>{issue.issueDescription}</p>
+                        <span className="text-muted">
+                          Status: {issue.issueStatus}
+                        </span>
+                      </div>
+                    </Link>
+                    <Button
+                      variant="success"
+                      className="m-3 position-relative"
+                      onClick={async () => {
                         await handleActivateIssue(issue.issueId);
-                        setShowAlert(true);}}
-                      > 
+                        setShowAlert(true);
+                      }}
+                    >
                       Aktivera issue
-                      </Button>                      
-                    </div>
-                  </Link>
+                    </Button>
+                  </div>
                 ))}
               </div>
             )}
@@ -168,19 +167,32 @@ export function Issue() {
             ) : (
               <div className="d-flex flex-column gap-3">
                 {activeIssues.map((issue) => (
-                  <Link
-                    key={issue.issueId}
-                    to={`/project/${projectId}/issue/${issue.issueId}`}
-                    className="card"
-                  >
+                  <div key={issue.issueId} className="card position-relative">
                     <div className="card-body">
-                      <h5 className="card-title">{issue.issueTitle}</h5>
-                      <p>{issue.issueDescription}</p>
-                      <span className="text-muted">
-                        Status: {issue.issueStatus}
-                      </span>
+                      <Link
+                        to={`/project/${projectId}/issue/${issue.issueId}`}
+                        style={{ textDecoration: "none", color: "inherit" }}
+                      >
+                        <h5 className="card-title">{issue.issueTitle}</h5>
+                        <p>{issue.issueDescription}</p>
+                        <span className="text-muted">
+                          Status: {issue.issueStatus}
+                        </span>
+                      </Link>
+                      <Button
+                        variant="success"
+                        className="mt-3"
+                        onClick={async (e) => {
+                          e.stopPropagation();
+                          e.preventDefault();
+                          await handleActivateIssue(issue.issueId);
+                          setShowAlert(true);
+                        }}
+                      >
+                        Klar markera issue
+                      </Button>
                     </div>
-                  </Link>
+                  </div>
                 ))}
               </div>
             )}
@@ -227,4 +239,3 @@ export function Issue() {
     </div>
   );
 }
-
