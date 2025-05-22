@@ -60,3 +60,14 @@ export async function getAllProjects() {
         console.error("Error getting projects:", error);
     }
 }
+
+    export async function updateProjectStatus(projectId : string){
+       try {
+        const respone = await axios.patch(`${BASE_URL}/updateProjectStatus/${projectId}`);
+        return respone.data;
+    } catch (error) {
+        console.error("Error getting projects:", error);
+    }
+
+    }
+

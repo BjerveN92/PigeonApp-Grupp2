@@ -21,13 +21,13 @@ export function EstimatedTime() {
   useEffect(() => {
     if (projectId) {
       //getProjectById(projectId).then((proj) => setMembers(proj.members));
-      getMembersByProjectId(projectId).then((fetchedMembers) => 
+      getMembersByProjectId(projectId).then((fetchedMembers) =>
         setMembers(fetchedMembers)
-    );
+      );
     }
     if (issueId) {
       getIssueById(issueId).then((iss) => {
-        console.log("Issue hämtad från backend:", iss);        
+        console.log("Issue hämtad från backend:", iss);
         setIssue(iss);
         setEstimatedTimes(iss.estimatedTimes);
       });
@@ -35,22 +35,18 @@ export function EstimatedTime() {
   }, [projectId, issueId]);
 
   //Kollar om alla medlemmar har lagt tid
-/*    const allMembersHaveTime = members.length > 0 && members.every((member) =>
+  /*    const allMembersHaveTime = members.length > 0 && members.every((member) =>
     estimatedTimes.some((et) => et.memberId === member.memberId)
   );  */
 
-
-  
-/*   console.log("members:", members);
+  /*   console.log("members:", members);
   console.log("estimatedTimes:", estimatedTimes);
   console.log("Alla medlemmar har lagt tid:", allMembersHaveTime); */
-  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!selectedMember || !time || !issueId) return;
-
 
     try {
       //Hämtar aktuell issue
@@ -58,21 +54,16 @@ export function EstimatedTime() {
 
       //Skapar nytt estimatedTime-objekt med uppdaterade värden
       const newEstimatedTime = {
-        estimatedTimeId: crypto.randomUUID(),
-        issueId: issueId,
         memberId: selectedMember,
         timeEstimate: Number(time),
-      }
+      };
       console.log("Ny estimerad tid:", newEstimatedTime);
-           
 
       //Skapar en ny version av issue med uppdaterd listan
       const updatedIssue = {
         ...currentIssue,
-        memberId: selectedMember,
-        timeEstimate: Number(time),
         estimatedTimes: [
-          ...(currentIssue.estimatedTimes || []), 
+          ...(currentIssue.estimatedTimes || []),
           newEstimatedTime,
         ],
       };
@@ -91,11 +82,9 @@ export function EstimatedTime() {
     }
   };
 
-
-
   if (!issue || !members) {
-  return <div>Laddar data...</div>;
-}
+    return <div>Laddar data...</div>;
+  }
 
   return (
     <div className="my-4" style={{ maxWidth: "500px" }}>
@@ -106,6 +95,7 @@ export function EstimatedTime() {
           <Form.Select
             value={selectedMember}
             onChange={(e) => setSelectedMember(e.target.value)}
+            required
           >
             <option value="">--Välj medlem--</option>
             {members.map((member) => (
@@ -149,12 +139,8 @@ export function EstimatedTime() {
         </ListGroup>
       )}
 
-      <br />      
-      <Button
-        variant="danger"
-        className="mt-4"
-        onClick={() => navigate(-1)}
-      >
+      <br />
+      <Button variant="danger" className="mt-4" onClick={() => navigate(-1)}>
         Tillbaka till projekt
       </Button>
     </div>
