@@ -8,6 +8,7 @@ import {
   getInactiveIssues,
   ActiveIssues,
   DoneIssues,
+  patchIssueStatus,
 } from "../utils/IssueApi";
 import type { Issue } from "../type/Interface";
 import { Link } from "react-router-dom";
@@ -32,6 +33,8 @@ export function Issue() {
   const [activeIssues, setActiveIssues] = useState<Issue[]>([]);
   const [doneIssues, setDoneIssues] = useState<Issue[]>([]);
   const [showAlert, setShowAlert] = useState(false);
+
+  //const allMembersHaveTime = members.length > 0 && members.length === estimatedTimes.length;
 
   const fetchIssues = async () => {
     if (!projectId) return;
@@ -71,6 +74,17 @@ export function Issue() {
     } catch (error) {
       console.error("Kunde inte spara issue:", error);
     }
+  };
+  //Funktion för att aktivera issue
+  const handleActivateIssue = async (issueId: string | undefined) => {
+    if (!issueId) return;
+    try {
+      await patchIssueStatus(issueId);
+      await fetchIssues();
+    } catch (error) {
+      console.error("Kunde inte aktivera issue:", error);
+    }
+      
   };
 
   return (
@@ -129,6 +143,16 @@ export function Issue() {
                       <span className="text-muted">
                         Status: {issue.issueStatus}
                       </span>
+
+                      <Button
+                        variant="success"
+                        className="mt-3"
+                        onClick={async () => {
+                        await handleActivateIssue(issue.issueId);
+                        setShowAlert(true);}}
+                      > 
+                      Aktivera issue
+                      </Button>                      
                     </div>
                   </Link>
                 ))}
@@ -203,3 +227,4 @@ export function Issue() {
     </div>
   );
 }
+
