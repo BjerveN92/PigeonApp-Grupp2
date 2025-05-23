@@ -113,6 +113,8 @@ export function EstimatedTime() {
             placeholder="t.ex. 2"
             value={time}
             onChange={(e) => setTime(e.target.value)}
+            min="1"
+            step="1"
             required
           />
         </Form.Group>
