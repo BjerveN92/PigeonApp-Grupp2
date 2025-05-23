@@ -2,15 +2,10 @@ import { TheBarChart } from "./BarChart";
 import { getAllProjects } from "../utils/ProjectApi";
 import type { Project } from "../type/Interface";
 import { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 
 
 export function StatisticPage() {
-    const navigate = useNavigate();
-    const backToHome = () => {
-          navigate("/");
-    };
+    
     const [projects, setProjects] = useState<Project[]>([]);
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
     // fetchar färdiga projekt 
@@ -39,12 +34,7 @@ export function StatisticPage() {
 
     return (
         <>
-                <div>
-            <Button 
-                variant="danger" 
-                onClick={backToHome}>
-                Tillbaka
-            </Button>
+        <div>
         </div>
         <div>
             <label>
