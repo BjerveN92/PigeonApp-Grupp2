@@ -18,7 +18,7 @@ export function GetProjects({
         {/* Vänstra kolumnen - Aktiva projekt */}
         <div className="col-md-6">
           <h3>Aktiva Projekt</h3>
-          <div className="d-flex flex-column gap-3">
+          <div className="d-flex flex-column gap-3"style={{ maxHeight: "400px", overflowY: "auto" }}>
             {activeProjects.map((project) => (
               <div key={project.projectId} className="card position-relative">
                 <div className="card-body">
@@ -44,7 +44,7 @@ export function GetProjects({
         {/* Högra kolumnen - Färdiga projekt */}
         <div className="col-md-6">
           <h3>Färdiga Projekt</h3>
-          <div className="d-flex flex-column gap-3">
+          <div className="d-flex flex-column gap-3"style={{ maxHeight: "400px", overflowY: "auto" }}>
             {finishedProjects.map((project) => (
               <div key={project.projectId} className="card">
                 <div className="card-body">
