@@ -42,6 +42,7 @@ export function FormProject({
     // Skicka projektet till servern
     const result = await postProject(newProject);
     console.log("Projekt sparat:", result);
+    alert("Projekt sparat!");
 
     onAddProject(result); // Lägg till det nya projektet i listan
 
@@ -57,6 +58,9 @@ export function FormProject({
   };
 
   return (
+    <div>
+    <h3>Lägg till projekt</h3>
+    
   <div className="d-flex gap-4 align-items-start">
     {/* Formulär */}
     <Form style={{ maxWidth: "200px", width: "100%" }} onSubmit={handleSave}>
@@ -107,6 +111,7 @@ export function FormProject({
         ))}
       </ul>
     </div>
+  </div>
   </div>
 );
 

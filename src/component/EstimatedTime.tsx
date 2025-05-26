@@ -47,6 +47,7 @@ export function EstimatedTime() {
         timeEstimate: Number(time),
       };
       console.log("Ny estimerad tid:", newEstimatedTime);
+      alert("Ny tidsestimering tillagd!");
 
       //Skapar en ny version av issue med uppdaterd listan
       const updatedIssue = {
@@ -82,7 +83,10 @@ export function EstimatedTime() {
   }
 
   return (
+    <div>
+     <h1>{issue.issueTitle}</h1>
     <div className="my-4" style={{ maxWidth: "500px" }}>
+     
       <h2>Lägg tidsestimering</h2>
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3">
@@ -145,6 +149,7 @@ export function EstimatedTime() {
       <Button variant="danger" className="mt-4" onClick={() => navigate(-1)}>
         Tillbaka till projekt
       </Button>
+    </div>
     </div>
   );
 }
