@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { getMembersByProjectId } from "../utils/MemberApi";
-
+import "../styles/Issue.css";
 import {
   postIssueToProject,
   getInactiveIssues,
@@ -117,7 +117,7 @@ export function Issue() {
       <h2>Lägg till issue</h2>
 
       {/*Formulär för att skapa nytt issue*/}
-      <form style={{ maxWidth: "400px" }} onSubmit={handleSaveIssue}>
+      <form style={{ maxWidth: "400px" }} onSubmit={handleSaveIssue} className="formIssue">
         <Form.Group className="mb-3" controlId="formIssueTitle">
           <Form.Label>Titel</Form.Label>
           <Form.Control
