@@ -69,6 +69,7 @@ export function Issue() {
 
     try {
       await postIssueToProject(projectId, { issueTitle, issueDescription });
+      alert("Issue sparad!");
       //Tömmer formulär
       setIssueTitle("");
       setIssueDescription("");

@@ -32,6 +32,7 @@ function PopupActTime({ show, onClose, issueId, onSaved }: PopupActTimeProps) {
       // 3. Skicka hela objektet till patchActualTime
       await patchActualTime(updatedIssue, issueId);
       console.log("Tid uppdaterad:", time);
+      alert("Faktisk tid uppdaterad");
       setTime("");
       //stäng popup om det finns en tid i onSaved
       if (onSaved) onSaved();
