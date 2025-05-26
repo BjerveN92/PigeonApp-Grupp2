@@ -102,7 +102,7 @@ export function FormProject({
     {/* Medlemslista */}
     <div style={ {marginLeft: "150px"} } >
       <h5>Tillagda medlemmar</h5>
-      <ul className="list-group" style={{ maxHeight: "200px", overflowY: "auto" }}>
+      <ul className="list-group" style={{ maxHeight: "180px", overflowY: "auto" }}>
         {memberName.map((member, index) => (
           <li key={index} className="list-group-item"
           >
