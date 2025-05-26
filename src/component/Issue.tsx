@@ -117,7 +117,7 @@ export function Issue() {
       <h2>Lägg till issue</h2>
 
       {/*Formulär för att skapa nytt issue*/}
-      <form style={{ maxWidth: "400px" }} onSubmit={handleSaveIssue} className="formIssue">
+      <form style={{ maxWidth: "400px", marginLeft: "30px" }} onSubmit={handleSaveIssue} className="formIssue">
         <Form.Group className="mb-3" controlId="formIssueTitle">
           <Form.Label>Titel</Form.Label>
           <Form.Control

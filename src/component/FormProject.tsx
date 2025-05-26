@@ -70,12 +70,12 @@ export function FormProject({
 
   return (
     <div>
-      <h3>Lägg till projekt</h3>
+      <h2>Lägg till projekt</h2>
 
       <div className="d-flex gap-4 align-items-start">
         {/* Formulär */}
         <Form
-          style={{ maxWidth: "400px", width: "100%" }}
+          style={{ maxWidth: "400px", width: "100%", marginLeft: "30px" }}
           onSubmit={handleSave}
         >
           <Form.Group className="mb-3" controlId="formProjectTitle">
