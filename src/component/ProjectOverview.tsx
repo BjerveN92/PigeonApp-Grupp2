@@ -41,7 +41,7 @@ function ProjectOverview() {
   return (
     <>
       <header>
-        <h1>Project översikt</h1>
+        <h1>Projekt översikt</h1>
       </header>
       <FormProject onAddProject={handleAddProject} />
       <GetProjects

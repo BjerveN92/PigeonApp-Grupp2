@@ -1,0 +1,12 @@
+.issues-wrapper {
+    display: flex;
+    gap: 2rem; /* optional: adds space between the two */
+}
+
+.container.mt-4 {
+    flex-direction: column; /* or remove this if not needed */
+}
+
+.formIssue {
+    /* your styles */
+}
