@@ -42,6 +42,7 @@ export function FormProject({
     // Skicka projektet till servern
     const result = await postProject(newProject);
     console.log("Projekt sparat:", result);
+    alert("Projekt sparat!");
 
     onAddProject(result); // Lägg till det nya projektet i listan
 
@@ -57,44 +58,61 @@ export function FormProject({
   };
 
   return (
-    <div className="d-flex justify-content-start">
-      <Form style={{ maxWidth: "200px", width: "100%" }} onSubmit={handleSave}>
-        <Form.Group className="mb-3" controlId="formProjectTitle">
-          <Form.Label>Projektets namn</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Ange projektnamn"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
-        </Form.Group>
+    <div>
+    <h3>Lägg till projekt</h3>
+    
+  <div className="d-flex gap-4 align-items-start">
+    {/* Formulär */}
+    <Form style={{ maxWidth: "400px", width: "100%" }} onSubmit={handleSave}>
+      <Form.Group className="mb-3" controlId="formProjectTitle">
+        <Form.Label>Projektets namn</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Ange projektnamn"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+      </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formProjectMembers">
-          <div className="d-flex align-items-center mb-1">
-            <Form.Label className="mb-0 me-2">Medlem</Form.Label>
-            <Button
-              variant="outline-secondary"
-              size="sm"
-              type="button"
-              onClick={handleMembers}
-            >
-              <i className="bi bi-plus"></i>
-            </Button>
-          </div>
-          <Form.Control
-            type="text"
-            placeholder="Ange medlem"
-            value={currentMember}
-            onChange={(e) => setCurrentMember(e.target.value)}
-            required
-          />
-        </Form.Group>
+      <Form.Group className="mb-3" controlId="formProjectMembers">
+        <div className="d-flex align-items-center mb-1">
+          <Form.Label className="mb-0 me-2">Medlem</Form.Label>
+          <Button
+            variant="outline-secondary"
+            size="sm"
+            type="button"
+            onClick={handleMembers}
+          >
+            <i className="bi bi-plus"></i>
+          </Button>
+        </div>
+        <Form.Control
+          type="text"
+          placeholder="Ange medlem"
+          value={currentMember}
+          onChange={(e) => setCurrentMember(e.target.value)} />
+      </Form.Group>
 
-        <Button variant="success" type="submit">
-          Spara
-        </Button>
-      </Form>
+      <Button variant="success" type="submit">
+        Spara
+      </Button>
+    </Form>
+
+    {/* Medlemslista */}
+    <div style={ {marginLeft: "150px"} } >
+      <h5>Tillagda medlemmar</h5>
+      <ul className="list-group" style={{ maxHeight: "180px", overflowY: "auto" }}>
+        {memberName.map((member, index) => (
+          <li key={index} className="list-group-item"
+          >
+            {member}
+          </li>
+        ))}
+      </ul>
     </div>
-  );
+  </div>
+  </div>
+);
+
 }

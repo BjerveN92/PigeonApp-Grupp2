@@ -32,6 +32,14 @@ export function EstimatedTime() {
     }
   }, [projectId, issueId]);
 
+  //Kollar om alla medlemmar har lagt tid
+  /*    const allMembersHaveTime = members.length > 0 && members.every((member) =>
+    estimatedTimes.some((et) => et.memberId === member.memberId)
+  );  */
+
+  /*   console.log("members:", members);
+  console.log("estimatedTimes:", estimatedTimes);
+  console.log("Alla medlemmar har lagt tid:", allMembersHaveTime); */
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,6 +56,7 @@ export function EstimatedTime() {
         timeEstimate: Number(time),
       };
       console.log("Ny estimerad tid:", newEstimatedTime);
+      alert("Ny tidsestimering tillagd!");
 
       //Skapar en ny version av issue med uppdaterd listan
       const updatedIssue = {
@@ -71,13 +80,22 @@ export function EstimatedTime() {
       console.error("Fel vid post av estimering:", error);
     }
   };
+  // denna funktion kollar ifall alla medlemmar lagt sin tid innan tiden visas
+  const allMembersHaveTime =
+    members.length > 0 &&
+    members.every((member) =>
+      estimatedTimes.some((et) => et.memberId === member.memberId)
+    );
 
   if (!issue || !members) {
     return <div>Laddar data...</div>;
   }
 
   return (
+    <div>
+     <h1>{issue.issueTitle}</h1>
     <div className="my-4" style={{ maxWidth: "500px" }}>
+     
       <h2>Lägg tidsestimering</h2>
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3">
@@ -88,11 +106,16 @@ export function EstimatedTime() {
             required
           >
             <option value="">--Välj medlem--</option>
-            {members.map((member) => (
-              <option key={member.memberId} value={member.memberId}>
-                {member.memberName}
-              </option>
-            ))}
+            {members
+              .filter(
+                (member) =>
+                  !estimatedTimes.some((et) => et.memberId === member.memberId)
+              )
+              .map((member) => (
+                <option key={member.memberId} value={member.memberId}>
+                  {member.memberName}
+                </option>
+              ))}
           </Form.Select>
         </Form.Group>
 
@@ -103,6 +126,8 @@ export function EstimatedTime() {
             placeholder="t.ex. 2"
             value={time}
             onChange={(e) => setTime(e.target.value)}
+            min="1"
+            step="1"
             required
           />
         </Form.Group>
@@ -112,8 +137,8 @@ export function EstimatedTime() {
       </Form>
 
       <h3 className="mt-4">Estimerade tid från medlemmarna</h3>
-      {estimatedTimes.length === 0 ? (
-        <p>Inga tidsestimeringar tillgängliga.</p>
+      {!allMembersHaveTime ? (
+        <p>Namnen visas när alla har lagt till sin tid.</p>
       ) : (
         <ListGroup>
           {estimatedTimes.map((et) => {
@@ -133,6 +158,7 @@ export function EstimatedTime() {
       <Button variant="danger" className="mt-4" onClick={() => navigate(-1)}>
         Tillbaka till projekt
       </Button>
+    </div>
     </div>
   );
 }

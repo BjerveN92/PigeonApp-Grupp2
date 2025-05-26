@@ -31,7 +31,7 @@ PigeonApp är fontenden till en webbapplikation byggd med **React**, **TypeScrip
 1. Klona repot  och gå till frontend-mappen:
 
    ```sh
-   git clone https://github.com/hppy-squid/PigeonApp-Grupp2 
+   git clone https://github.com/BjerveN92/PigeonApp-Grupp2
    cd Grupp-inläming/Frontend/PigeonApp-Grupp2
    ```
 
@@ -50,6 +50,8 @@ npm run dev
 ```
 
 Applikationen körs nu på [http://localhost:5173](http://localhost:5173) (eller den port Vite anger).
+
+Deploy : https://thepigeonapp.netlify.app/
 
 ### Bygg för produktion
 

@@ -69,6 +69,7 @@ export function Issue() {
 
     try {
       await postIssueToProject(projectId, { issueTitle, issueDescription });
+      alert("Issue sparad!");
       //Tömmer formulär
       setIssueTitle("");
       setIssueDescription("");
@@ -101,12 +102,16 @@ export function Issue() {
     ).length;
     return estimatedCount === members.length;
   };
-  inactiveIssues.forEach((issue) => {
-    console.log("Issue:", issue.issueTitle);
-    console.log("estimatedTimes:", issue.estimatedTimes);
-    console.log("members:", members);
-    console.log("allMembersEstimated:", allMembersEstimated(issue));
-  });
+  
+  const checkActualTime = (issue: Issue) => {
+    if (issue.actualTime === 0 ) {
+     fetchIssues();
+      return false;
+    }
+      return true;
+  }
+
+
   return (
     <div className="my-4">
       <h2>Lägg till issue</h2>
@@ -190,20 +195,18 @@ export function Issue() {
               <div className="d-flex flex-column gap-3">
                 {activeIssues.map((issue) => (
                   <div key={issue.issueId} className="card position-relative">
-                    <div className="card-body">
-                      <Link
-                        to={`/project/${projectId}/issue/${issue.issueId}`}
-                        style={{ textDecoration: "none", color: "inherit" }}
-                      >
+                     
+                        <div className="card-body">
                         <h5 className="card-title">{issue.issueTitle}</h5>
                         <p>{issue.issueDescription}</p>
                         <span className="text-muted">
                           Status: {issue.issueStatus}
                         </span>
-                      </Link>
+                        </div>
+                      
                       <Button
                         variant="success"
-                        className="mt-3"
+                        className="m-3 position-relative"
                         onClick={async (e) => {
                           e.stopPropagation();
                           e.preventDefault();
@@ -212,7 +215,7 @@ export function Issue() {
                       >
                         Klar markera issue
                       </Button>
-                    </div>
+                   
                   </div>
                 ))}
               </div>
@@ -227,16 +230,8 @@ export function Issue() {
             ) : (
               <div className="d-flex flex-column gap-3">
                 {doneIssues.map((issue) => (
-                  <Link
-                    key={issue.issueId}
-                    to={`/project/${projectId}/issue/${issue.issueId}`}
-                    className="card"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setSelectedIssueId(issue.issueId);
-                      setShowPopup(true);
-                    }}
-                  >
+                  <div className="card position-relative">
+                 
                     <div className="card-body">
                       <h5 className="card-title">{issue.issueTitle}</h5>
                       <p>{issue.issueDescription}</p>
@@ -244,7 +239,20 @@ export function Issue() {
                         Status: {issue.issueStatus}
                       </span>
                     </div>
-                  </Link>
+                  
+                  <Button
+                        variant="success"
+                        className="m-3 position-relative"
+                      onClick={(e) => {
+                      checkActualTime(issue);
+                      e.preventDefault();
+                      setSelectedIssueId(issue.issueId);
+                      setShowPopup(true);
+                    }}
+                      disabled={checkActualTime(issue)}
+                       >  Sätt faktisk tid
+                      </Button>
+                  </div>
                 ))}
                 <PopupActTime
                   show={showPopup}
