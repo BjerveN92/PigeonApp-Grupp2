@@ -63,7 +63,7 @@ export function FormProject({
     
   <div className="d-flex gap-4 align-items-start">
     {/* Formulär */}
-    <Form style={{ maxWidth: "200px", width: "100%" }} onSubmit={handleSave}>
+    <Form style={{ maxWidth: "400px", width: "100%" }} onSubmit={handleSave}>
       <Form.Group className="mb-3" controlId="formProjectTitle">
         <Form.Label>Projektets namn</Form.Label>
         <Form.Control
@@ -100,9 +100,9 @@ export function FormProject({
     </Form>
 
     {/* Medlemslista */}
-    <div>
-      <h5>Medlemmar</h5>
-      <ul className="list-group">
+    <div style={ {marginLeft: "150px"} } >
+      <h5>Tillagda medlemmar</h5>
+      <ul className="list-group" style={{ maxHeight: "200px", overflowY: "auto" }}>
         {memberName.map((member, index) => (
           <li key={index} className="list-group-item"
           >
