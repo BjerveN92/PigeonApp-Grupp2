@@ -12,6 +12,10 @@ function ProjectOverview() {
   const [activeProjects, setActiveProjects] = useState<Project[]>([]);
   const [finishedProjects, setFinishedProjects] = useState<Project[]>([]);
 
+  useEffect(() => {
+    loadProjects();
+  }, []);
+
   const handleProjectStatus = async (projectId: string | undefined) => {
     if (!projectId) return;
     await updateProjectStatus(projectId);
@@ -28,10 +32,6 @@ function ProjectOverview() {
     setActiveProjects(active);
     setFinishedProjects(finished);
   };
-
-  useEffect(() => {
-    loadProjects();
-  }, []);
 
   // Lägg till nytt projekt direkt i state
   const handleAddProject = (newProject: Project) => {

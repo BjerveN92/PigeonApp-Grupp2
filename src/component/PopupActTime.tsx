@@ -69,10 +69,10 @@ function PopupActTime({ show, onClose, issueId, onSaved }: PopupActTimeProps) {
 
         <Modal.Footer>
           <Button variant="secondary" onClick={onClose}>
-            Close
+            Stäng
           </Button>
           <Button variant="primary" onClick={actualTime}>
-            Save changes
+            Spara
           </Button>
         </Modal.Footer>
       </Modal>
