@@ -40,6 +40,13 @@ export function Issue() {
     getMembersByProjectId(projectId).then(setMembers);
   }, [projectId]);
 
+  //Hämtar issues när komponenten laddas
+  useEffect(() => {
+    if (!projectId) return;
+
+    fetchIssues();
+  }, [projectId]);
+
   const fetchIssues = async () => {
     if (!projectId) return;
     try {
@@ -55,12 +62,6 @@ export function Issue() {
       console.error("Fel vid hämtning av issues:", error);
     }
   };
-  //Hämtar issues när komponenten laddas
-  useEffect(() => {
-    if (!projectId) return;
-
-    fetchIssues();
-  }, [projectId]);
 
   //Funktion för att skapa nytt issue
   const handleSaveIssue = async (e: React.FormEvent) => {
@@ -102,22 +103,25 @@ export function Issue() {
     ).length;
     return estimatedCount === members.length;
   };
-  
+
   const checkActualTime = (issue: Issue) => {
-    if (issue.actualTime === 0 ) {
-     fetchIssues();
+    if (issue.actualTime === 0) {
+      fetchIssues();
       return false;
     }
-      return true;
-  }
-
+    return true;
+  };
 
   return (
     <div className="my-4">
       <h2>Lägg till issue</h2>
 
       {/*Formulär för att skapa nytt issue*/}
-      <form style={{ maxWidth: "400px", marginLeft: "30px" }} onSubmit={handleSaveIssue} className="formIssue">
+      <form
+        style={{ maxWidth: "400px", marginLeft: "30px" }}
+        onSubmit={handleSaveIssue}
+        className="formIssue"
+      >
         <Form.Group className="mb-3" controlId="formIssueTitle">
           <Form.Label>Titel</Form.Label>
           <Form.Control
@@ -195,27 +199,25 @@ export function Issue() {
               <div className="d-flex flex-column gap-3">
                 {activeIssues.map((issue) => (
                   <div key={issue.issueId} className="card position-relative">
-                     
-                        <div className="card-body">
-                        <h5 className="card-title">{issue.issueTitle}</h5>
-                        <p>{issue.issueDescription}</p>
-                        <span className="text-muted">
-                          Status: {issue.issueStatus}
-                        </span>
-                        </div>
-                      
-                      <Button
-                        variant="success"
-                        className="m-3 position-relative"
-                        onClick={async (e) => {
-                          e.stopPropagation();
-                          e.preventDefault();
-                          await handleActivateIssue(issue.issueId);
-                        }}
-                      >
-                        Klar markera issue
-                      </Button>
-                   
+                    <div className="card-body">
+                      <h5 className="card-title">{issue.issueTitle}</h5>
+                      <p>{issue.issueDescription}</p>
+                      <span className="text-muted">
+                        Status: {issue.issueStatus}
+                      </span>
+                    </div>
+
+                    <Button
+                      variant="success"
+                      className="m-3 position-relative"
+                      onClick={async (e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        await handleActivateIssue(issue.issueId);
+                      }}
+                    >
+                      Klar markera issue
+                    </Button>
                   </div>
                 ))}
               </div>
@@ -231,7 +233,6 @@ export function Issue() {
               <div className="d-flex flex-column gap-3">
                 {doneIssues.map((issue) => (
                   <div className="card position-relative">
-                 
                     <div className="card-body">
                       <h5 className="card-title">{issue.issueTitle}</h5>
                       <p>{issue.issueDescription}</p>
@@ -239,19 +240,21 @@ export function Issue() {
                         Status: {issue.issueStatus}
                       </span>
                     </div>
-                  
-                  <Button
-                        variant="success"
-                        className="m-3 position-relative"
+
+                    <Button
+                      variant="success"
+                      className="m-3 position-relative"
                       onClick={(e) => {
-                      checkActualTime(issue);
-                      e.preventDefault();
-                      setSelectedIssueId(issue.issueId);
-                      setShowPopup(true);
-                    }}
+                        checkActualTime(issue);
+                        e.preventDefault();
+                        setSelectedIssueId(issue.issueId);
+                        setShowPopup(true);
+                      }}
                       disabled={checkActualTime(issue)}
-                       >  Sätt faktisk tid
-                      </Button>
+                    >
+                      {" "}
+                      Sätt faktisk tid
+                    </Button>
                   </div>
                 ))}
                 <PopupActTime
